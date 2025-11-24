@@ -60,7 +60,8 @@ def main():
     # Si NO es un proyecto de ML/IA, eliminar carpetas relacionadas
     if project_type == "basic_api":
         print(">> Limpiando archivos de ML/IA (no necesarios)...")
-        remove_dir(app_path / "ml")
+        remove_dir(Path("ml"))
+        remove_dir(Path("notebooks"))
         remove_file(app_path / "services" / "ml_service.py")
         remove_file(app_path / "services" / "predict.py")
         remove_file(app_path / "api" / "routes" / "predictor.py")

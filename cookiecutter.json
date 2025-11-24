@@ -9,16 +9,16 @@
     "project_type": ["basic_api", "ml_api", "ai_rag_api"],
 
     "use_database": ["yes", "no"],
-    "database_type": ["postgresql", "sqlserver", "sqlite"],
+    "database_type": ["postgresql", "sqlserver", "sqlite", "none"],
 
     "use_ai_services": ["yes", "no"],
-    "ai_provider": ["openai", "gemini", "huggingface", "none"],
+    "ai_provider": ["none", "openai", "gemini", "huggingface"],
 
     "use_workers": ["yes", "no"],
-    "worker_type": ["celery", "rq", "none"],
+    "worker_type": ["none", "celery", "rq"],
 
     "use_storage": ["yes", "no"],
-    "storage_type": ["minio", "s3", "local", "none"],
+    "storage_type": ["none", "minio", "s3", "local"],
 
     "use_redis": ["yes", "no"],
 
