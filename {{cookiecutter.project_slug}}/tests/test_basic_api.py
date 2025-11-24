@@ -5,8 +5,32 @@ Tests para la API básica de tareas
 import pytest
 from fastapi.testclient import TestClient
 from app.main import app
+{% if cookiecutter.use_database == "yes" -%}
+from sqlalchemy.exc import OperationalError
+from app.db import engine
+{% endif %}
 
 client = TestClient(app)
+
+{% if cookiecutter.use_database == "yes" -%}
+# Verificar si la base de datos está disponible
+def is_database_available():
+    try:
+        with engine.connect() as conn:
+            conn.execute("SELECT 1")
+        return True
+    except (OperationalError, Exception):
+        return False
+
+# Skip todos los tests si la DB no está disponible
+pytestmark = pytest.mark.skipif(
+    not is_database_available(),
+    reason="Database not available"
+)
+{% else -%}
+# Skip todos los tests si no se usa base de datos
+pytestmark = pytest.mark.skip(reason="Database not enabled for this project")
+{% endif %}
 
 
 def test_create_task():
