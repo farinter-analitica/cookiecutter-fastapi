@@ -106,7 +106,11 @@ async def healthcheck():
             }
         {% else -%}
         # No AI provider configured
-        pass
+        health_status['components']['ai_api'] = {
+            'status': 'warning',
+            'provider': 'none',
+            'message': 'No AI provider configured'
+        }
         {% endif %}
     except Exception as e:
         health_status['components']['ai_api'] = {
