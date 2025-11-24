@@ -104,6 +104,9 @@ async def healthcheck():
                 'provider': 'Google Gemini',
                 'message': 'API key no configurada'
             }
+        {% else -%}
+        # No AI provider configured
+        pass
         {% endif %}
     except Exception as e:
         health_status['components']['ai_api'] = {
@@ -161,6 +164,9 @@ async def healthcheck():
             'path': settings.UPLOAD_DIR,
             'exists': storage_exists
         }
+        {% else -%}
+        # No storage configured
+        pass
         {% endif %}
     except Exception as e:
         all_healthy = False
