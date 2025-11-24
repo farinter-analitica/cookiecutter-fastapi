@@ -1,0 +1,126 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: {{cookiecutter.project_slug}}_api_prod
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    environment:
+      - APP_ENV=production
+      - DEBUG=false
+      {% if cookiecutter.use_database == "yes" -%}
+      # La base de datos debe estar desplegada externamente
+      - DATABASE_URL=${DATABASE_URL}
+      {% endif %}
+      {% if cookiecutter.use_redis == "yes" -%}
+      - REDIS_URL=${REDIS_URL:-redis://redis:6379/0}
+      {% endif %}
+      {% if cookiecutter.use_ai_services == "yes" -%}
+      {% if cookiecutter.ai_provider == "openai" -%}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      {% elif cookiecutter.ai_provider == "gemini" -%}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      {% elif cookiecutter.ai_provider == "huggingface" -%}
+      - HUGGINGFACE_API_KEY=${HUGGINGFACE_API_KEY}
+      {% endif %}
+      {% endif %}
+      {% if cookiecutter.use_storage == "yes" -%}
+      {% if cookiecutter.storage_type == "minio" -%}
+      # MinIO debe estar desplegado externamente
+      - MINIO_ENDPOINT=${MINIO_ENDPOINT}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+      - MINIO_BUCKET=${MINIO_BUCKET}
+      {% elif cookiecutter.storage_type == "s3" -%}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - S3_BUCKET=${S3_BUCKET}
+      {% endif %}
+      {% endif %}
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+    {% if cookiecutter.use_redis == "yes" -%}
+    depends_on:
+      - redis
+    {% endif -%}
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/liveness"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  {% if cookiecutter.use_redis == "yes" -%}
+  redis:
+    image: redis:7-alpine
+    container_name: {{cookiecutter.project_slug}}_redis_prod
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-network
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  {% endif %}
+  {% if cookiecutter.use_workers == "yes" and cookiecutter.worker_type == "rq" -%}
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: {{cookiecutter.project_slug}}_worker_prod
+    restart: unless-stopped
+    environment:
+      - APP_ENV=production
+      - REDIS_URL=${REDIS_URL:-redis://redis:6379/0}
+      {% if cookiecutter.use_database == "yes" -%}
+      - DATABASE_URL=${DATABASE_URL}
+      {% endif %}
+    command: rq worker --url redis://redis:6379/0 --name {{cookiecutter.project_slug}}-worker
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  {% elif cookiecutter.use_workers == "yes" and cookiecutter.worker_type == "celery" -%}
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: {{cookiecutter.project_slug}}_worker_prod
+    restart: unless-stopped
+    environment:
+      - APP_ENV=production
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL:-redis://redis:6379/0}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND:-redis://redis:6379/1}
+      {% if cookiecutter.use_database == "yes" -%}
+      - DATABASE_URL=${DATABASE_URL}
+      {% endif %}
+    command: celery -A app.workers.celery_app worker --loglevel=info --concurrency=2
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  {% endif -%}
+
+networks:
+  app-network:
+    driver: bridge
+{% if cookiecutter.use_redis == "yes" %}
+
+volumes:
+  redis_data:
+{% endif %}

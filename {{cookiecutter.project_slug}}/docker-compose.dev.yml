@@ -1,0 +1,193 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: {{cookiecutter.project_slug}}_api_dev
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    volumes:
+      # Hot-reload: monta el código fuente
+      - ./app:/app/app
+      - ./ml:/app/ml
+      {% if cookiecutter.use_storage == "yes" and cookiecutter.storage_type == "local" -%}
+      - ./uploads:/app/uploads
+      {% endif %}
+    environment:
+      - DEBUG=true
+      - APP_ENV=dev
+      {% if cookiecutter.use_database == "yes" -%}
+      {% if cookiecutter.database_type == "postgresql" -%}
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/{{cookiecutter.project_slug}}
+      {% elif cookiecutter.database_type == "sqlserver" -%}
+      - DATABASE_URL=mssql+pyodbc://sa:YourPassword123@db:1433/{{cookiecutter.project_slug}}?driver=ODBC+Driver+17+for+SQL+Server
+      {% else -%}
+      - DATABASE_URL=sqlite:///./{{cookiecutter.project_slug}}.db
+      {% endif %}
+      {% endif %}
+      {% if cookiecutter.use_redis == "yes" -%}
+      - REDIS_URL=redis://redis:6379/0
+      {% endif %}
+      {% if cookiecutter.use_ai_services == "yes" -%}
+      {% if cookiecutter.ai_provider == "openai" -%}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      {% elif cookiecutter.ai_provider == "gemini" -%}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      {% elif cookiecutter.ai_provider == "huggingface" -%}
+      - HUGGINGFACE_API_KEY=${HUGGINGFACE_API_KEY}
+      {% endif %}
+      {% endif %}
+      {% if cookiecutter.use_storage == "yes" and cookiecutter.storage_type == "minio" -%}
+      - MINIO_ENDPOINT=http://minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - MINIO_BUCKET={{cookiecutter.project_slug}}
+      {% endif %}
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    {% if cookiecutter.use_database == "yes" and cookiecutter.database_type in ["postgresql", "sqlserver"] or cookiecutter.use_redis == "yes" or (cookiecutter.use_storage == "yes" and cookiecutter.storage_type == "minio") -%}
+    depends_on:
+      {% if cookiecutter.use_database == "yes" and cookiecutter.database_type in ["postgresql", "sqlserver"] -%}
+      - db
+      {% endif %}
+      {% if cookiecutter.use_redis == "yes" -%}
+      - redis
+      {% endif %}
+      {% if cookiecutter.use_storage == "yes" and cookiecutter.storage_type == "minio" -%}
+      - minio
+      {% endif %}
+    {% endif -%}
+    networks:
+      - app-network
+
+  {% if cookiecutter.use_database == "yes" and cookiecutter.database_type == "postgresql" -%}
+  db:
+    image: postgres:15-alpine
+    container_name: {{cookiecutter.project_slug}}_db_dev
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: {{cookiecutter.project_slug}}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  {% elif cookiecutter.use_database == "yes" and cookiecutter.database_type == "sqlserver" -%}
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: {{cookiecutter.project_slug}}_db_dev
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourPassword123"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - app-network
+
+  {% endif %}
+  {% if cookiecutter.use_redis == "yes" -%}
+  redis:
+    image: redis:7-alpine
+    container_name: {{cookiecutter.project_slug}}_redis_dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-network
+
+  {% endif %}
+  {% if cookiecutter.use_storage == "yes" and cookiecutter.storage_type == "minio" -%}
+  minio:
+    image: minio/minio:latest
+    container_name: {{cookiecutter.project_slug}}_minio_dev
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio_data:/data
+    networks:
+      - app-network
+
+  # Cliente para crear el bucket automáticamente
+  minio-create-bucket:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      sleep 5;
+      /usr/bin/mc alias set myminio http://minio:9000 minioadmin minioadmin;
+      /usr/bin/mc mb myminio/{{cookiecutter.project_slug}} --ignore-existing;
+      /usr/bin/mc anonymous set public myminio/{{cookiecutter.project_slug}};
+      exit 0;
+      "
+    networks:
+      - app-network
+
+  {% endif %}
+  {% if cookiecutter.use_workers == "yes" and cookiecutter.worker_type == "rq" -%}
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: {{cookiecutter.project_slug}}_worker_dev
+    volumes:
+      - ./app:/app/app
+    environment:
+      - APP_ENV=dev
+      - REDIS_URL=redis://redis:6379/0
+    command: rq worker --url redis://redis:6379/0
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  {% elif cookiecutter.use_workers == "yes" and cookiecutter.worker_type == "celery" -%}
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: {{cookiecutter.project_slug}}_worker_dev
+    volumes:
+      - ./app:/app/app
+    environment:
+      - APP_ENV=dev
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+    command: celery -A app.workers.celery_app worker --loglevel=info
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  {% endif %}
+
+networks:
+  app-network:
+    driver: bridge
+{% if (cookiecutter.use_database == "yes" and cookiecutter.database_type in ["postgresql", "sqlserver"]) or cookiecutter.use_redis == "yes" or (cookiecutter.use_storage == "yes" and cookiecutter.storage_type == "minio") %}
+volumes:
+  {% if cookiecutter.use_database == "yes" and cookiecutter.database_type == "postgresql" -%}
+  postgres_data:
+  {% elif cookiecutter.use_database == "yes" and cookiecutter.database_type == "sqlserver" -%}
+  sqlserver_data:
+  {% endif %}
+  {% if cookiecutter.use_redis == "yes" -%}
+  redis_data:
+  {% endif %}
+  {% if cookiecutter.use_storage == "yes" and cookiecutter.storage_type == "minio" -%}
+  minio_data:
+  {% endif %}
+{% endif %}

@@ -1,0 +1,33 @@
+{
+    "project_name": "Name of the project",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
+    "project_short_description": "A short description of the project",
+    "full_name": "Your name",
+    "email": "you@example.com",
+    "version": "0.1.0",
+
+    "project_type": ["basic_api", "ml_api", "ai_rag_api"],
+
+    "use_database": ["yes", "no"],
+    "database_type": ["postgresql", "sqlserver", "sqlite"],
+
+    "use_ai_services": ["yes", "no"],
+    "ai_provider": ["openai", "gemini", "huggingface", "none"],
+
+    "use_workers": ["yes", "no"],
+    "worker_type": ["celery", "rq", "none"],
+
+    "use_storage": ["yes", "no"],
+    "storage_type": ["minio", "s3", "local", "none"],
+
+    "use_redis": ["yes", "no"],
+
+    "machine_learn_model_path": "./ml/model/",
+    "machine_learn_model_name": "model.pkl",
+    "input_example_path": "./ml/model/examples/example.json",
+
+    "release_date": "{% now 'local' %}",
+    "_copy_without_render": [
+        "*ci.yaml"
+    ]
+}
