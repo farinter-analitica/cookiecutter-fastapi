@@ -1,11 +1,14 @@
 from fastapi import FastAPI
+{% if cookiecutter.use_database == "yes" -%}
 from sqlalchemy.exc import OperationalError
-
+{% endif %}
 from core import events
 from main import get_application
+{% if cookiecutter.project_type in ["ml_api", "ai_rag_api"] -%}
 import services.predict as predict
+{% endif %}
 
-
+{% if cookiecutter.project_type in ["ml_api", "ai_rag_api"] -%}
 def test_preload_model(monkeypatch):
     called = {}
 
@@ -19,6 +22,7 @@ def test_preload_model(monkeypatch):
     )
     events.preload_model()
     assert called.get("called") is True
+{% endif %}
 
 
 def test_create_start_app_handler(monkeypatch):

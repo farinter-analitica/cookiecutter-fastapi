@@ -1,4 +1,4 @@
-{% if cookiecutter.use_database == "yes" -%}
+{% if cookiecutter.use_database == "yes" and cookiecutter.project_type in ["ml_api", "ai_rag_api"] -%}
 import json
 
 import pytest

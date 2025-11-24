@@ -62,6 +62,14 @@ def main():
         print(">> Limpiando archivos de ML/IA (no necesarios)...")
         remove_dir(app_path / "ml")
         remove_file(app_path / "services" / "ml_service.py")
+        remove_file(app_path / "services" / "predict.py")
+        remove_file(app_path / "api" / "routes" / "predictor.py")
+
+        # Eliminar tests de ML
+        remove_file(Path("tests") / "test_api_predictor.py")
+        remove_file(Path("tests") / "test_predict_service.py")
+        remove_file(Path("tests") / "test_predictor.py")
+        remove_file(Path("tests") / "test_ml_api.py")
         print("[OK] Configuracion para API basica completada\n")
 
     # =================================================================
