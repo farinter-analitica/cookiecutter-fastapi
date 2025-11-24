@@ -1,128 +1,116 @@
-# Contributor Covenant Code of Conduct
+# Código de Conducta y Estándares de Desarrollo - Grupo Farinter
 
-## Our Pledge
+## Ámbito de Aplicación
 
-We as members, contributors, and leaders pledge to make participation in our
-community a harassment-free experience for everyone, regardless of age, body
-size, visible or invisible disability, ethnicity, sex characteristics, gender
-identity and expression, level of experience, education, socio-economic status,
-nationality, personal appearance, race, religion, or sexual identity
-and orientation.
+Este documento establece los estándares de conducta y desarrollo para el **Equipo de Analítica e IA de Grupo Farinter**. 
 
-We pledge to act and interact in ways that contribute to an open, welcoming,
-diverse, inclusive, and healthy community.
+**IMPORTANTE**: Este es un repositorio de código propietario y cerrado. El acceso está restringido exclusivamente a empleados autorizados de Grupo Farinter.
 
-## Our Standards
+## Nuestro Compromiso
 
-Examples of behavior that contributes to a positive environment for our
-community include:
+Como miembros del equipo de **Grupo Farinter - Analítica e IA**, nos comprometemos a:
 
-* Demonstrating empathy and kindness toward other people
-* Being respectful of differing opinions, viewpoints, and experiences
-* Giving and gracefully accepting constructive feedback
-* Accepting responsibility and apologizing to those affected by our mistakes,
-  and learning from the experience
-* Focusing on what is best not just for us as individuals, but for the
-  overall community
+* Mantener un ambiente de trabajo profesional, colaborativo y respetuoso
+* Cumplir con los más altos estándares de calidad técnica y excelencia
+* Proteger la confidencialidad de la información y código propietario de la empresa
+* Trabajar con integridad, honestidad y profesionalismo en todo momento
+* Respetar las políticas internas de seguridad y privacidad de datos
 
-Examples of unacceptable behavior include:
+## Estándares de Conducta Profesional
 
-* The use of sexualized language or imagery, and sexual attention or
-  advances of any kind
-* Trolling, insulting or derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or email
-  address, without their explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
-  professional setting
+Ejemplos de comportamiento que contribuyen a un ambiente de trabajo positivo:
 
-## Enforcement Responsibilities
+* Demostrar empatía y amabilidad hacia otros miembros del equipo
+* Ser respetuoso con opiniones, puntos de vista y experiencias diferentes
+* Proporcionar y aceptar retroalimentación constructiva de manera profesional
+* Aceptar responsabilidad por errores, disculparse cuando sea necesario y aprender de la experiencia
+* Enfocarse en lo mejor para el equipo y la organización
 
-Community leaders are responsible for clarifying and enforcing our standards of
-acceptable behavior and will take appropriate and fair corrective action in
-response to any behavior that they deem inappropriate, threatening, offensive,
-or harmful.
+Ejemplos de comportamiento inaceptable:
 
-Community leaders have the right and responsibility to remove, edit, or reject
-comments, commits, code, wiki edits, issues, and other contributions that are
-not aligned to this Code of Conduct, and will communicate reasons for moderation
-decisions when appropriate.
+* Uso de lenguaje o imágenes sexualizadas, y atención o avances sexuales de cualquier tipo
+* Comentarios ofensivos, insultos o ataques personales o políticos
+* Acoso público o privado de cualquier forma
+* Publicar información privada de otros sin su permiso explícito
+* Compartir código propietario o información confidencial fuera de la empresa
+* Cualquier otra conducta que pueda considerarse inapropiada en un entorno profesional
 
-## Scope
+## Responsabilidades de los Líderes del Equipo
 
-This Code of Conduct applies within all community spaces, and also applies when
-an individual is officially representing the community in public spaces.
-Examples of representing our community include using an official e-mail address,
-posting via an official social media account, or acting as an appointed
-representative at an online or offline event.
+Los líderes del equipo son responsables de:
 
-## Enforcement
+* Clarificar y hacer cumplir nuestros estándares de comportamiento y desarrollo
+* Tomar acciones correctivas apropiadas y justas ante cualquier comportamiento inapropiado
+* Remover, editar o rechazar comentarios, commits, código y otras contribuciones que no estén alineadas con este Código de Conducta
+* Comunicar las razones de las decisiones de moderación cuando sea apropiado
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement at
-.
-All complaints will be reviewed and investigated promptly and fairly.
+## Ámbito de Aplicación
 
-All community leaders are obligated to respect the privacy and security of the
-reporter of any incident.
+Este Código de Conducta aplica:
 
-## Enforcement Guidelines
+* En todos los espacios de trabajo del equipo (oficinas, repositorios, herramientas de comunicación)
+* Cuando un individuo representa oficialmente al equipo o a Grupo Farinter
+* En correos electrónicos corporativos, reuniones, eventos y cualquier comunicación relacionada con el trabajo
 
-Community leaders will follow these Community Impact Guidelines in determining
-the consequences for any action they deem in violation of this Code of Conduct:
+## Confidencialidad y Código Propietario
 
-### 1. Correction
+**TODO EL CÓDIGO Y DOCUMENTACIÓN ES PROPIEDAD EXCLUSIVA DE GRUPO FARINTER:**
 
-**Community Impact**: Use of inappropriate language or other behavior deemed
-unprofessional or unwelcome in the community.
+* El acceso está restringido solo a empleados autorizados
+* Está prohibido compartir, copiar o distribuir código fuera de la organización
+* Todo el trabajo desarrollado es propiedad intelectual de Grupo Farinter
+* Los empleados deben cumplir con los acuerdos de confidencialidad firmados
 
-**Consequence**: A private, written warning from community leaders, providing
-clarity around the nature of the violation and an explanation of why the
-behavior was inappropriate. A public apology may be requested.
+## Reporte de Incidentes
 
-### 2. Warning
+Casos de comportamiento abusivo, acoso u otras conductas inaceptables deben ser reportados a:
 
-**Community Impact**: A violation through a single incident or series
-of actions.
+* Recursos Humanos de Grupo Farinter
+* Tu supervisor directo
+* El líder del equipo de Analítica e IA
 
-**Consequence**: A warning with consequences for continued behavior. No
-interaction with the people involved, including unsolicited interaction with
-those enforcing the Code of Conduct, for a specified period of time. This
-includes avoiding interactions in community spaces as well as external channels
-like social media. Violating these terms may lead to a temporary or
-permanent ban.
+Todas las quejas serán revisadas e investigadas de manera rápida, justa y confidencial.
 
-### 3. Temporary Ban
+## Consecuencias
 
-**Community Impact**: A serious violation of community standards, including
-sustained inappropriate behavior.
+Los líderes del equipo seguirán estas guías para determinar las consecuencias de cualquier violación:
 
-**Consequence**: A temporary ban from any sort of interaction or public
-communication with the community for a specified period of time. No public or
-private interaction with the people involved, including unsolicited interaction
-with those enforcing the Code of Conduct, is allowed during this period.
-Violating these terms may lead to a permanent ban.
+### 1. Corrección
 
-### 4. Permanent Ban
+**Impacto**: Uso de lenguaje inapropiado u otro comportamiento considerado no profesional.
 
-**Community Impact**: Demonstrating a pattern of violation of community
-standards, including sustained inappropriate behavior,  harassment of an
-individual, or aggression toward or disparagement of classes of individuals.
+**Consecuencia**: Advertencia privada y por escrito del líder del equipo, explicando la naturaleza de la violación. Puede solicitarse una disculpa.
 
-**Consequence**: A permanent ban from any sort of public interaction within
-the community.
+### 2. Advertencia Formal
 
-## Attribution
+**Impacto**: Violación mediante un incidente único o serie de acciones.
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage],
-version 2.0, available at
-https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.
+**Consecuencia**: Advertencia formal documentada con consecuencias para comportamiento continuo. Puede incluir restricciones temporales de interacción con el equipo.
 
-Community Impact Guidelines were inspired by [Mozilla's code of conduct
-enforcement ladder](https://github.com/mozilla/diversity).
+### 3. Suspensión Temporal
 
-[homepage]: https://www.contributor-covenant.org
+**Impacto**: Violación seria de los estándares, incluyendo comportamiento inapropiado sostenido.
 
-For answers to common questions about this code of conduct, see the FAQ at
-https://www.contributor-covenant.org/faq. Translations are available at
-https://www.contributor-covenant.org/translations.
+**Consecuencia**: Suspensión temporal de acceso a proyectos y sistemas, sujeto a revisión por Recursos Humanos.
+
+### 4. Terminación
+
+**Impacto**: Patrón de violación de estándares, comportamiento inapropiado sostenido, acoso o violación de políticas de confidencialidad.
+
+**Consecuencia**: Terminación del empleo según las políticas de Grupo Farinter y legislación aplicable.
+
+## Estándares de Desarrollo
+
+Además de las normas de conducta, todos los miembros del equipo deben:
+
+* Seguir las convenciones de código y mejores prácticas establecidas
+* Documentar adecuadamente el código y mantener la documentación actualizada
+* Realizar revisiones de código exhaustivas y constructivas
+* Escribir pruebas unitarias y asegurar la calidad del código
+* Utilizar control de versiones de manera responsable con mensajes de commit claros
+* Mantener la seguridad y privacidad de los datos en todo momento
+
+---
+
+**Última actualización**: Noviembre 2025  
+**Contacto**: Equipo de IA - Grupo Farinter
