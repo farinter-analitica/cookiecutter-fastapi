@@ -1,3 +1,4 @@
+{% if cookiecutter.use_database == "yes" -%}
 import json
 
 import pytest
@@ -41,3 +42,11 @@ async def test_predict_logs_request_response(monkeypatch):
     assert json.loads(log.request) == data.model_dump()
     assert json.loads(log.response) == response.model_dump()
     db.close()
+{% else -%}
+# Este test requiere base de datos habilitada
+import pytest
+
+def test_request_logging_requires_database():
+    """Este test solo está disponible cuando use_database=yes"""
+    pytest.skip("Request logging requires database enabled")
+{% endif %}

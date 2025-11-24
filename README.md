@@ -19,12 +19,5 @@ pip install cookiecutter
 ### ¿Cómo genero un proyecto FastAPI?
 
 ```bash
-cookiecutter gh:farinter-analitica/cookiecutter-fastapi
+cookiecutter https://github.com/farinter-analitica/cookiecutter-fastapi
 ```
-
-### Ejemplo Práctico
-
-```bash
-cookiecutter gh:farinter-analitica/cookiecutter-fastapi
-```
-Siguirás una serie de preguntas para personalizar tu proyecto. Al finalizar, se generará una carpeta con la estructura base de tu aplicación FastAPI.

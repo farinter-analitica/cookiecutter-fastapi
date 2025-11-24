@@ -97,7 +97,14 @@ def main():
     if use_database == "yes":
         create_dir(app_path / "models")
     else:
-        remove_dir(app_path / "models")
+        # Si no hay base de datos pero es proyecto ML/IA, mantener models/prediction.py
+        if project_type in ["ml_api", "ai_rag_api"]:
+            # Solo eliminar archivos relacionados con DB, mantener prediction.py
+            remove_file(app_path / "models" / "log.py")
+            remove_file(app_path / "models" / "__init__.py")
+        else:
+            # Si no es ML/IA, eliminar todo models
+            remove_dir(app_path / "models")
         remove_file(app_path / "db.py")
 
     if use_workers == "yes":

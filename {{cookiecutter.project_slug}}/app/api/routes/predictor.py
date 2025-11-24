@@ -6,8 +6,10 @@ from core.config import INPUT_EXAMPLE
 from fastapi import APIRouter, HTTPException
 from fastapi.concurrency import run_in_threadpool
 from loguru import logger
+{% if cookiecutter.use_database == "yes" -%}
 from db import SessionLocal
 from models.log import RequestLog
+{% endif -%}
 from models.prediction import (
     HealthResponse,
     MachineLearningDataInput,
@@ -51,6 +53,7 @@ async def predict(data_input: MachineLearningDataInput):
         prediction=prediction, prediction_label=prediction_label
     )
 
+    {% if cookiecutter.use_database == "yes" -%}
     try:
         with SessionLocal() as db:
             db.add(
@@ -62,7 +65,7 @@ async def predict(data_input: MachineLearningDataInput):
             db.commit()
     except Exception:
         logger.exception("failed to log request")
-
+    {% endif %}
     return response
 
 

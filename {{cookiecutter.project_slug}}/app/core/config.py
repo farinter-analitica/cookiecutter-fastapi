@@ -110,3 +110,20 @@ logging.basicConfig(
     handlers=[InterceptHandler(level=LOGGING_LEVEL)], level=LOGGING_LEVEL
 )
 logger.configure(handlers=[{"sink": sys.stderr, "level": LOGGING_LEVEL}])
+
+# Exportar variables para compatibilidad con imports directos
+API_PREFIX = settings.API_PREFIX
+PROJECT_NAME = settings.PROJECT_NAME
+VERSION = settings.VERSION
+DEBUG = settings.DEBUG
+
+{% if cookiecutter.use_database == "yes" -%}
+DATABASE_URL = settings.DATABASE_URL
+{% endif -%}
+
+{% if cookiecutter.project_type in ["ml_api", "ai_rag_api"] -%}
+MODEL_PATH = settings.MODEL_PATH
+MODEL_NAME = settings.MODEL_NAME
+INPUT_EXAMPLE = settings.INPUT_EXAMPLE
+MEMOIZATION_FLAG = settings.MEMOIZATION_FLAG
+{% endif %}
