@@ -13,12 +13,52 @@ dependencies = [
     "pydantic-settings>=2.0.0",
     "requests>=2.32.0",
     "loguru>=0.7.0",
+    "httpx>=0.27.0",
+    {% if cookiecutter.project_type in ['ml_api', 'ai_rag_api'] -%}
     "joblib>=1.2.0",
     "scikit-learn>=1.1.3",
     "pandas>=2.2.3",
-    "httpx>=0.27.0",
+    "numpy>=1.24.0",
+    {% endif -%}
+    {% if cookiecutter.use_database == "yes" and cookiecutter.database_type != "none" -%}
     "sqlalchemy>=2.0.0",
-    "psycopg2-binary>=2.9.0"
+    {% endif -%}
+    {% if cookiecutter.use_database == "yes" and cookiecutter.database_type == "postgresql" -%}
+    "psycopg2-binary>=2.9.0",
+    {% endif -%}
+    {% if cookiecutter.use_database == "yes" and cookiecutter.database_type == "sqlserver" -%}
+    "pyodbc>=4.0.0",
+    {% endif -%}
+    {% if cookiecutter.use_redis == "yes" -%}
+    "redis>=5.0.0",
+    {% endif -%}
+    {% if cookiecutter.use_workers == "yes" and cookiecutter.worker_type == "celery" -%}
+    "celery>=5.3.0",
+    {% endif -%}
+    {% if cookiecutter.use_workers == "yes" and cookiecutter.worker_type == "rq" -%}
+    "rq>=1.15.0",
+    {% endif -%}
+    {% if cookiecutter.use_storage == "yes" and cookiecutter.storage_type == "s3" -%}
+    "boto3>=1.28.0",
+    {% endif -%}
+    {% if cookiecutter.use_storage == "yes" and cookiecutter.storage_type == "minio" -%}
+    "minio>=7.1.0",
+    {% endif -%}
+    {% if cookiecutter.use_ai_services == "yes" and cookiecutter.ai_provider == "openai" -%}
+    "openai>=1.0.0",
+    {% endif -%}
+    {% if cookiecutter.use_ai_services == "yes" and cookiecutter.ai_provider == "gemini" -%}
+    "google-generativeai>=0.3.0",
+    {% endif -%}
+    {% if cookiecutter.use_ai_services == "yes" and cookiecutter.ai_provider == "huggingface" -%}
+    "transformers>=4.30.0",
+    "torch>=2.0.0",
+    {% endif -%}
+    {% if cookiecutter.project_type == "ai_rag_api" -%}
+    "langchain>=0.1.0",
+    "chromadb>=0.4.0",
+    "sentence-transformers>=2.2.0",
+    {% endif -%}
 ]
 
 [project.optional-dependencies]

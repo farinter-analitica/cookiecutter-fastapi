@@ -11,7 +11,9 @@ services:
     volumes:
       # Hot-reload: monta el código fuente
       - ./app:/app/app
+      {% if cookiecutter.project_type in ['ml_api', 'ai_rag_api'] -%}
       - ./ml:/app/ml
+      {% endif %}
       {% if cookiecutter.use_storage == "yes" and cookiecutter.storage_type == "local" -%}
       - ./uploads:/app/uploads
       {% endif %}

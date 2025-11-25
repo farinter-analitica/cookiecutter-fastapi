@@ -13,7 +13,9 @@ ARG DEV=false
 RUN if [ "$DEV" = "true" ] ; then uv pip install --system -e .[dev] ; fi
 
 COPY ./app/ ./
+{% if cookiecutter.project_type in ['ml_api', 'ai_rag_api'] %}
 COPY ./ml/model/ ./ml/model/
+{% endif %}
 
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 
