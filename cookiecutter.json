@@ -1,29 +1,58 @@
 {
-    "project_name": "Name of the project",
-    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
-    "project_short_description": "A short description of the project",
-    "full_name": "Your name",
-    "email": "you@example.com",
+    "__project_name__": "Nombre del proyecto (ej: API Predicción Ventas)",
+    "project_name": "Nombre del Proyecto",
+    
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-').replace('_', '-') }}",
+    
+    "__project_short_description__": "Descripción breve del proyecto",
+    "project_short_description": "Una API para el equipo de IA de Grupo Farinter",
+    
+    "__full_name__": "Tu nombre completo",
+    "full_name": "Equipo IA Farinter",
+    
+    "__email__": "Tu correo corporativo @farinter.com",
+    "email": "ia@farinter.com",
+    
+    "__version__": "Versión inicial del proyecto",
     "version": "0.1.0",
 
+    "__project_type__": "Tipo de proyecto: basic_api (API básica), ml_api (API con ML), ai_rag_api (API con IA/RAG)",
     "project_type": ["basic_api", "ml_api", "ai_rag_api"],
 
+    "__use_database__": "¿Usar base de datos? (sí/no)",
     "use_database": ["yes", "no"],
+    
+    "__database_type__": "Tipo de base de datos: postgresql, sqlserver, sqlite, none (ninguna)",
     "database_type": ["postgresql", "sqlserver", "sqlite", "none"],
 
+    "__use_ai_services__": "¿Usar servicios de IA? (sí/no)",
     "use_ai_services": ["yes", "no"],
+    
+    "__ai_provider__": "Proveedor de IA: openai (GPT), gemini (Google), huggingface, none (ninguno)",
     "ai_provider": ["none", "openai", "gemini", "huggingface"],
 
+    "__use_workers__": "¿Usar workers para tareas asíncronas? (sí/no)",
     "use_workers": ["yes", "no"],
+    
+    "__worker_type__": "Tipo de worker: celery (recomendado), rq (simple), none (ninguno)",
     "worker_type": ["none", "celery", "rq"],
 
+    "__use_storage__": "¿Usar almacenamiento de archivos? (sí/no)",
     "use_storage": ["yes", "no"],
+    
+    "__storage_type__": "Tipo de almacenamiento: minio (local S3), s3 (AWS S3), local (filesystem), none (ninguno)",
     "storage_type": ["none", "minio", "s3", "local"],
 
+    "__use_redis__": "¿Usar Redis para caché? (sí/no)",
     "use_redis": ["yes", "no"],
 
+    "__machine_learn_model_path__": "Ruta donde se guardará el modelo de ML",
     "machine_learn_model_path": "./ml/model/",
+    
+    "__machine_learn_model_name__": "Nombre del archivo del modelo (ej: modelo_ventas.pkl)",
     "machine_learn_model_name": "model.pkl",
+    
+    "__input_example_path__": "Ruta del archivo con ejemplos de entrada para el modelo",
     "input_example_path": "./ml/model/examples/example.json",
 
     "release_date": "{% now 'local' %}",
